@@ -1,2 +1,2 @@
 # ExplainablePrediction
-Explain the DNN prediction by examples.
+Explain DNN predictions by examples.
