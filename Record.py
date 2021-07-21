@@ -89,7 +89,7 @@ for i in range(0,12):
     res = random.sample(range(0, 512), 100)
     b = b[:,:,res,:]
     ActFun.append(b)
-    Act_Gelu = 13+i*11
+    Act_Gelu = 12+i*11
     b = saved_data[Act_Gelu][2].cpu().numpy()
     res = random.sample(range(0, 512), 100)
     b = b[:,res,:]
