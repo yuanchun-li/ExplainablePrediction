@@ -99,4 +99,4 @@ b = saved_data[138][2].cpu().numpy()
 res = random.sample(range(0, 768), 100)
 b = b[:,res]
 ActFun.append(b)
-ActFun
+print(ActFun)
