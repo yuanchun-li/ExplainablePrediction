@@ -10,7 +10,7 @@ code = open("code.txt", "r", encoding="utf-8")
 code_list = code.readlines()
 
 test_list = []
-for i,each in enumerate(code_list[0:100]):
+for i,each in enumerate(code_list):
     s = each.split("<EOL>")
     count = 1
     for block in s:
