@@ -4,6 +4,7 @@ import numpy as np
 from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer
 
+
 def sample_activations(model_name, input, n_neurons):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
@@ -35,7 +36,8 @@ def sample_activations(model_name, input, n_neurons):
             cnt += 1
 
     return outputs, sampled_neurons
-  
+
+
 activations = []
 def extract(self, input, output):
     global activations

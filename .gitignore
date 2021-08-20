@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+char-rnn.pytorch
+data
+output
+.idea
+secret*
+amlt*
+.amlt*
+amlk8s*
+
