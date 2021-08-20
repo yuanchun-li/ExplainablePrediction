@@ -1,5 +1,9 @@
 import Levenshtein
 import pymongo
+from datasets import load_dataset
+
+dataset = load_dataset("code_search_net", "python")
+testset = dataset['test']
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db1 = client["re_code_search_net_python"]
@@ -8,6 +12,17 @@ test_col = db1["test"]
 db2 = client["code_search_net_row"]
 my_col = db2["test"]
 
+
+cnt = 1
+limit = 100000
+for item in testset:
+    mydict={}
+    if cnt == limit:
+        break
+    item["id"]=str(cnt)
+    mydict=item
+    cnt += 1
+    test_col.insert_one(mydict)
 
 code_list = []
 for item in test_col.find({},{"_id": 0, "id":1, "func_code_string":1} ):
