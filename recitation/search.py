@@ -2,7 +2,8 @@
 
 
 class SearchEngine(object):
-    pass
+    def search(self, query):
+        pass
 
 
 class TextSearchEngine(SearchEngine):

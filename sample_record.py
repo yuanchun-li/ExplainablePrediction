@@ -48,6 +48,7 @@ def extract(self, input, output):
     else:
         activations.append(output[0,0].detach().cpu().numpy().flatten())
 
+
 def get_layers(model):
     layers = []
 
