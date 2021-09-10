@@ -28,8 +28,8 @@ def char_tensor(string):
             continue
     return tensor
 
-# Readable time elapsed
 
+# Readable time elapsed
 def time_since(since):
     s = time.time() - since
     m = math.floor(s / 60)

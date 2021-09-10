@@ -28,9 +28,12 @@ def generate(decoder, prime_str='A', predict_len=100, temperature=0.8, cuda=Fals
         output, hidden = decoder(inp, hidden)
         
         # Sample from the network as a multinomial distribution
-        # output_dist = output.data.view(-1).div(temperature).exp()  # use temperature
-        output_dist = output.data.view(-1).exp()
+        output_dist = output.data.view(-1).div(temperature).exp()  # use temperature
         top_i = torch.multinomial(output_dist, 1)[0]
+
+        # output_dist = output.data.view(-1).exp()
+        # # top_i = torch.multinomial(output_dist, 1)[0]
+        # top_i = output_dist.argmax()
 
         # Add predicted character to string and use as next input
         predicted_char = all_characters[top_i]
@@ -53,7 +56,10 @@ if __name__ == '__main__':
     argparser.add_argument('--cuda', action='store_true')
     args = argparser.parse_args()
 
-    decoder = torch.load(args.filename)
+    if args.cuda:
+        decoder = torch.load(args.filename)
+    else:
+        decoder = torch.load(args.filename, map_location=torch.device('cpu'))
     del args.filename
     print(generate(decoder, **vars(args)))
 
