@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # https://github.com/spro/char-rnn.pytorch
 
+import json
 import torch
 import os
 import argparse
@@ -9,7 +10,7 @@ from helpers import *
 from model import *
 
 
-def generate(decoder, prime_str='A', predict_len=100, temperature=0.8, cuda=False):
+def generate(decoder, prime_str='A', predict_len=200, temperature=0.8, cuda=True):
     hidden = decoder.init_hidden(1)
     prime_input = Variable(char_tensor(prime_str).unsqueeze(0))
 
@@ -37,12 +38,15 @@ def generate(decoder, prime_str='A', predict_len=100, temperature=0.8, cuda=Fals
 
         # Add predicted character to string and use as next input
         predicted_char = all_characters[top_i]
+        #print(predicted_char)
         predicted += predicted_char
         inp = Variable(char_tensor(predicted_char).unsqueeze(0))
         if cuda:
             inp = inp.cuda()
-
-    return predicted
+    #print(prime_str)
+    new_predicted = predicted.replace(prime_str, "").split("<EOL>")[0].strip(" ")
+    #print(predicted.replace(prime_str, "").split("<EOL>")[0])
+    return new_predicted
 
 
 # Run as standalone script
@@ -50,8 +54,8 @@ if __name__ == '__main__':
     # Parse command line arguments
     argparser = argparse.ArgumentParser()
     argparser.add_argument('filename', type=str)
-    argparser.add_argument('-p', '--prime_str', type=str, default='A')
-    argparser.add_argument('-l', '--predict_len', type=int, default=100)
+    #argparser.add_argument('-p', '--prime_str', type=str, default='A')
+    argparser.add_argument('-l', '--predict_len', type=int, default=200)
     argparser.add_argument('-t', '--temperature', type=float, default=0.8)
     argparser.add_argument('--cuda', action='store_true')
     args = argparser.parse_args()
@@ -61,5 +65,11 @@ if __name__ == '__main__':
     else:
         decoder = torch.load(args.filename, map_location=torch.device('cpu'))
     del args.filename
-    print(generate(decoder, **vars(args)))
-
+    
+    with open('/home/v-weixyan/Desktop/ExplainablePrediction/char-rnn/train_input.json', 'r', encoding="utf-8") as f:
+        for jsonstr in f.readlines():
+            item = json.loads(jsonstr)
+            pred = generate(decoder, item["input"], **vars(args))
+            with open("/home/v-weixyan/Desktop/ExplainablePrediction/char-rnn/train_pred.txt","a") as f:
+                f.write(pred)
+                f.write("\n")
