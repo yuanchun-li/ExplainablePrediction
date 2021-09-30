@@ -1,4 +1,4 @@
-#py150数据集
+# py150数据集
 
 具体下载方式及处理方式上级说明中已说明.
 
@@ -25,3 +25,7 @@ train_input_activations.json在train_data_recitiation_act.json基础上增加记
 ## py150_test
 
 同理，不过是test data.
+
+
+## py150
+下载之后的处理完的原始数据.
