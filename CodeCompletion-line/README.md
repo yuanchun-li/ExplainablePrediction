@@ -1,4 +1,4 @@
-#Code Completion (line level)
+# Code Completion (line level)
 
 Here is the introduction and pipeline for line level code completion task and record the activation values of some key neurons in the prediction process.
 
@@ -188,7 +188,7 @@ It might take 45 minutes for inferencing on py150 dataset on a single NVIDIA P10
 
 ### Record neuron activations
 
-It's recommanded to run inference on single GPU. The predictions will be saved at Mongodb as [test_input_activations].
+It's recommanded to run inference on single GPU. The predictions will be saved at Mongodb as `test_input_activations`.
 
 ```shell
 export CUDA_VISIBLE_DEVICES=0
